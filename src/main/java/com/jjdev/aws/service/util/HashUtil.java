@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HashUtil {
 
-	public static String getSecureHash(String text) {
-		return DigestUtils.sha256Hex(text);
-	}
+    public static String getSecureHash(String text) {
+        return DigestUtils.sha256Hex(text);
+    }
 
 }

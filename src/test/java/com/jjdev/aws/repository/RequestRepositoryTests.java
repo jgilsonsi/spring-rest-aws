@@ -23,59 +23,59 @@ import com.jjdev.aws.domain.enums.RequestState;
 @SpringBootTest
 public class RequestRepositoryTests {
 
-	@Autowired
-	private RequestRepository requestRepository;
+    @Autowired
+    private RequestRepository requestRepository;
 
-	@Test
-	public void AsaveTest() {
-		User owner = new User();
-		owner.setId(1L);
+    @Test
+    public void AsaveTest() {
+        User owner = new User();
+        owner.setId(1L);
 
-		Request request = new Request(null, "New Laptop HP", "I'd like to buy a laptop", new Date(), RequestState.OPEN,
-				owner, null);
-		Request createdRequest = requestRepository.save(request);
+        Request request = new Request(null, "New Laptop HP", "I'd like to buy a laptop", new Date(), RequestState.OPEN,
+                owner, null);
+        Request createdRequest = requestRepository.save(request);
 
-		assertThat(createdRequest.getId()).isEqualTo(1L);
-	}
+        assertThat(createdRequest.getId()).isEqualTo(1L);
+    }
 
-	@Test
-	public void updateTest() {
-		User owner = new User();
-		owner.setId(1L);
+    @Test
+    public void updateTest() {
+        User owner = new User();
+        owner.setId(1L);
 
-		Request request = new Request(1L, "New Laptop HP", "I'd like to buy a laptop with 16Gb RAM", null,
-				RequestState.OPEN, owner, null);
-		Request updatedRequest = requestRepository.save(request);
+        Request request = new Request(1L, "New Laptop HP", "I'd like to buy a laptop with 16Gb RAM", null,
+                RequestState.OPEN, owner, null);
+        Request updatedRequest = requestRepository.save(request);
 
-		assertThat(updatedRequest.getDescription()).isEqualTo("I'd like to buy a laptop with 16Gb RAM");
-	}
+        assertThat(updatedRequest.getDescription()).isEqualTo("I'd like to buy a laptop with 16Gb RAM");
+    }
 
-	@Test
-	public void getByIdTest() {
-		Optional<Request> result = requestRepository.findById(1L);
-		Request request = result.get();
+    @Test
+    public void getByIdTest() {
+        Optional<Request> result = requestRepository.findById(1L);
+        Request request = result.get();
 
-		assertThat(request.getSubject()).isEqualTo("New Laptop HP");
-	}
+        assertThat(request.getSubject()).isEqualTo("New Laptop HP");
+    }
 
-	@Test
-	public void listTest() {
-		List<Request> requests = requestRepository.findAll();
+    @Test
+    public void listTest() {
+        List<Request> requests = requestRepository.findAll();
 
-		assertThat(requests.size()).isEqualTo(1);
-	}
+        assertThat(requests.size()).isEqualTo(1);
+    }
 
-	@Test
-	public void listByOwnerIdTest() {
-		List<Request> requests = requestRepository.findAllByOwnerId(1L);
+    @Test
+    public void listByOwnerIdTest() {
+        List<Request> requests = requestRepository.findAllByOwnerId(1L);
 
-		assertThat(requests.size()).isEqualTo(1);
-	}
+        assertThat(requests.size()).isEqualTo(1);
+    }
 
-	@Test
-	public void updateStatusTest() {
-		int affectedRows = requestRepository.updateStatus(1L, RequestState.IN_PROGRESS);
-		assertThat(affectedRows).isEqualTo(1);
-	}
+    @Test
+    public void updateStatusTest() {
+        int affectedRows = requestRepository.updateStatus(1L, RequestState.IN_PROGRESS);
+        assertThat(affectedRows).isEqualTo(1);
+    }
 
 }

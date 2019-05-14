@@ -14,11 +14,11 @@ import com.jjdev.aws.domain.enums.RequestState;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
-	public List<Request> findAllByOwnerId(Long id);
+    public List<Request> findAllByOwnerId(Long id);
 
-	@Transactional(readOnly = false)
-	@Modifying
-	@Query("UPDATE request SET state = ?2 WHERE id = ?1")
-	public int updateStatus(Long id, RequestState state);
+    @Transactional(readOnly = false)
+    @Modifying
+    @Query("UPDATE request SET state = ?2 WHERE id = ?1")
+    public int updateStatus(Long id, RequestState state);
 
 }
