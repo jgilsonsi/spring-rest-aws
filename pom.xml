@@ -10,10 +10,10 @@
         <relativePath />
     </parent>
     <groupId>com.jjdev</groupId>
-    <artifactId>spring-aws</artifactId>
+    <artifactId>spring-rest-aws</artifactId>
     <version>0.0.1</version>
     <packaging>war</packaging>
-    <name>spring-aws</name>
+    <name>spring-rest-aws</name>
     <description>RESTful API</description>
 
     <properties>

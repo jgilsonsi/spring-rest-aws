@@ -17,7 +17,6 @@ public class UserService {
     private UserRepository userRepository;
 
     public User save(User user) {
-
         String hash = HashUtil.getSecureHash(user.getPassword());
         user.setPassword(hash);
 
@@ -26,7 +25,6 @@ public class UserService {
     }
 
     public User update(User user) {
-
         String hash = HashUtil.getSecureHash(user.getPassword());
         user.setPassword(hash);
 
@@ -45,7 +43,6 @@ public class UserService {
     }
 
     public User login(String email, String password) {
-
         password = HashUtil.getSecureHash(password);
 
         Optional<User> result = userRepository.login(email, password);
