@@ -3,12 +3,11 @@ package com.jjdev.aws.dto;
 import com.jjdev.aws.domain.Request;
 import com.jjdev.aws.domain.RequestStage;
 import com.jjdev.aws.domain.User;
+import com.jjdev.aws.domain.enums.RequestState;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,25 +17,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserUpdateDto {
+public class RequestUpdateDto {
 
-    @NotNull
     private Long id;
 
-    @NotBlank
-    private String name;
+    @NotBlank(message = "Subject is required")
+    private String subject;
 
-    @Email
-    private String email;
+    private String description;
 
-    @Size(min = 7, max = 99, message = "Password must bu between {min} and {max}")
-    private String password;
+    @NotNull
+    private RequestState state;
 
-    private List<Request> requests = new ArrayList<>();
+    @NotNull(message = "Owner is required")
+    private User owner;
+
     private List<RequestStage> stages = new ArrayList<>();
 
-    public User transformToUser() {
-        return new User(this.id, this.name, this.email, this.password, null, this.requests, this.stages);
+    public Request transformRequest() {
+        return new Request(this.id, this.subject, this.description, null, this.state, this.owner, this.stages);
     }
 
 }

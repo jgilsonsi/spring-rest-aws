@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.jjdev.aws.exception.NotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
@@ -25,9 +27,15 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        String defaultMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        List<String> errors = new ArrayList<>();
 
-        ApiError error = new ApiError(HttpStatus.BAD_REQUEST.value(), defaultMessage, new Date());
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            errors.add(error.getDefaultMessage());
+        });
+
+        String defaultMessage = "invalid fields";
+
+        ApiErrorList error = new ApiErrorList(HttpStatus.BAD_REQUEST.value(), defaultMessage, new Date(), errors);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
