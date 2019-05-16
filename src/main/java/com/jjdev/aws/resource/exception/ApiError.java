@@ -14,13 +14,10 @@ import lombok.Setter;
 @Setter
 public class ApiError implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private int code;
-	private String msg;
-	private Date date;
+    private int code;
+    private String msg;
+    private Date date;
 
 }

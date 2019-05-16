@@ -2,9 +2,10 @@ package com.jjdev.aws.resource;
 
 import com.jjdev.aws.domain.Request;
 import com.jjdev.aws.domain.RequestStage;
+import com.jjdev.aws.model.PageModel;
+import com.jjdev.aws.model.PageRequestModel;
 import com.jjdev.aws.service.RequestService;
 import com.jjdev.aws.service.RequestStageService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -46,15 +48,24 @@ public class RequestResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Request>> listAll() {
-        List<Request> requests = requestService.listAll();
-        return ResponseEntity.ok(requests);
+    public ResponseEntity<PageModel<Request>> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        PageRequestModel pr = new PageRequestModel(page, size);
+
+        PageModel<Request> pm = requestService.listAllByLazyMode(pr);
+        return ResponseEntity.ok(pm);
     }
 
     @GetMapping("/{id}/request-stages")
-    public ResponseEntity<List<RequestStage>> listAllRequestStagesById(@PathVariable(name = "id") Long id) {
-        List<RequestStage> requestStages = requestStageService.listAllByrequestId(id);
-        return ResponseEntity.ok(requestStages);
+    public ResponseEntity<PageModel<RequestStage>> listAllRequestStagesById(@PathVariable(name = "id") Long id,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        PageRequestModel pr = new PageRequestModel(page, size);
+
+        PageModel<RequestStage> pm = requestStageService.listAllByRequestIdByLazyMode(id, pr);
+        return ResponseEntity.ok(pm);
     }
 
 }
